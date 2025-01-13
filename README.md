@@ -1,71 +1,100 @@
-# CS-GY 6053 Foundation of Data Science Project
+# CS-GY 6053 Foundation of Data Science Final Project
 
-# Food Delivery Time Analysis: Impact of Weather Conditions
+# Causal Impact of Weather Conditions on Food Delivery Times
 
-## **Project Overview**
-This project aims to analyze how different weather conditions impact food delivery times across varying distances. By understanding the relationship between weather, distance, and delivery times, this study can provide actionable insights for food delivery services to optimize routes, improve delivery time estimates, and set better customer expectations.
-
----
-
-## **Research Question**
-**How do different weather conditions impact food delivery times across varying distances?**  
-This question explores the relationship between environmental and logistical factors, helping identify trends and patterns that affect delivery efficiency.
+## Project Overview
+This project investigates the causal impact of weather conditions on food delivery times, accounting for traffic density as a significant confounding variable. The analysis focuses on understanding how weather directly and indirectly affects delivery efficiency, providing insights that can help optimize logistics and improve customer satisfaction.
 
 ---
 
-## **Dataset Description**
-- **Source**: [Kaggle - Food Delivery Dataset](https://www.kaggle.com/datasets/gauravmalik26/food-delivery-dataset)
-- **Sample Size**: ~10,000 delivery records.
-- **Key Variables**:
-  - **Order ID**: Unique identifier for each order.
-  - **Delivery Time (T)**: Time taken for delivery (in minutes).
-  - **Distance (D)**: Distance between the restaurant and delivery location.
-  - **Weather Conditions (W)**: Categorized as sunny, rainy, stormy, foggy, etc.
-  - **Order Time**: Timestamp when the order was placed.
-  - **Delivery Location Type**: Urban, suburban, or rural classification.
-  - **Traffic Conditions**: Status of traffic during the delivery (if available).
+## Research Question
+**How do weather conditions causally influence food delivery times, considering traffic density as a confounding factor?**
+
+This question addresses the interplay between environmental and logistical factors to uncover the total and direct effects of weather on delivery times.
 
 ---
 
-## **Causal Model**
-The analysis uses a Directed Acyclic Graph (DAG) to represent variable relationships:
-- **Treatment Variable**: Weather conditions (W).
-- **Outcome Variable**: Delivery time (T).
-- **Confounding Variable**: Distance (D).
+## Dataset Description
+The dataset was sourced from Kaggle and includes **100 observations** on delivery performance across different conditions. Key variables are:
+
+- **Delivery Time (`time`)**: Measured in minutes, representing the outcome variable.
+- **Weather Conditions (`weather`)**: Categorical variable with six levels:
+  - Cloudy
+  - Fog
+  - Sandstorms
+  - Stormy
+  - Sunny
+  - Windy
+- **Traffic Density (`traffic`)**: Categorical variable with three levels:
+  - High
+  - Medium
+  - Low
 
 ---
 
-## **Statistical Models**
-Two models are employed to evaluate the relationship between variables:
-1. **Multivariate Linear Regression**:
-   - Captures linear relationships between delivery time, weather, and distance.
-2. **Decision Tree Regression**:
-   - Handles non-linear interactions and provides interpretable outputs.
+## Causal Model
+The causal relationships between variables are depicted using a **Directed Acyclic Graph (DAG)**:
+- **Weather → Traffic**: Weather influences traffic density.
+- **Weather → Delivery Time**: Weather conditions directly impact delivery time.
+- **Traffic → Delivery Time**: Traffic density affects delivery time.
+- **Weather → Traffic → Delivery Time**: Weather indirectly impacts delivery time through traffic.
+
+### Statistical Models
+1. **Total Effect Model**: Captures the overall impact of weather conditions on delivery times without controlling for traffic.
+2. **Direct Effect Model**: Isolates the direct impact of weather on delivery times by accounting for traffic as a mediator.
 
 ---
 
-## **Proposed Enhancements**
-- **Interaction Terms**: Including interaction effects between weather conditions and distance in the regression model.
-- **Feature Engineering**: Additional variables such as traffic, time of day, and road type may be included if data is available.
-- **Regularization**: Techniques like Lasso or Ridge regression to mitigate overfitting risks.
-- **Data Preprocessing**:
-  - Imputation of missing data.
-  - Scaling continuous variables.
-  - Encoding categorical variables (e.g., weather types).
-
+## Priors and Distributions
+- **Weather-Specific Effects (`α[w]`)**: Assumed to follow a `Normal(0, 0.5)` distribution.
+- **Residual Variability (`σ`)**: Modeled using an `Exponential(0.5)` distribution.
 
 ---
 
-## **Expected Insights**
-- Quantify the impact of weather on delivery times.
-- Identify patterns in delivery delays under specific weather and distance combinations.
-- Provide recommendations for optimizing delivery efficiency in different scenarios.
+## Methodology
+### Preprocessing
+- Standardized delivery times for uniformity.
+- Encoded categorical variables for compatibility with statistical modeling.
+
+### Model Evaluation
+- Leave-One-Out Cross-Validation (LOO) was performed to compare models.
+- Pareto `k` values were assessed to confirm reliable LOO estimates.
 
 ---
 
-## **Project Team**
-- **Akshat Singh** 
-- **Abha Wadijkar** 
-- **Shweta Shekhar** 
+## Key Findings
+1. **Adverse Weather Conditions**:
+   - Weather types such as storms and sandstorms significantly increase delivery times.
+   - Sunny and windy conditions have relatively lower impacts.
+2. **Traffic Density**:
+   - Traffic density mediates the impact of weather on delivery times, with high traffic amplifying delays.
+3. **Model Performance**:
+   - The **Direct Effect Model** (ELPD = 228.90) demonstrated superior fit compared to the **Total Effect Model** (ELPD = 273.82).
 
-For additional details or collaboration inquiries, please contact the project team members.
+---
+
+## Visualizations
+1. **Scatter Plots**:
+   - Show the relationship between weather, traffic, and standardized delivery times.
+2. **Box Plots**:
+   - Highlight the variation in delivery times across weather categories.
+3. **Posterior Predictive Checks**:
+   - Validate the models' fit to observed data.
+4. **DAGs**:
+   - Depict the causal pathways and their effects.
+
+---
+
+## Conclusion
+The study confirms that weather and traffic are critical factors influencing delivery times. By isolating direct and mediated effects, the findings provide actionable insights for improving delivery efficiency under varying weather and traffic conditions.
+
+---
+
+## How to Run the Analysis
+1. Clone this repository:
+   ```bash
+   git clone <repository-url>
+## Contributors of this project 
+Akshat Singh 
+Shweta Shekhar
+Abha Wadijkar
