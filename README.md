@@ -90,6 +90,17 @@ The study confirms that weather and traffic are critical factors influencing del
 
 ---
 
+Food Delivery Data Subset
+This document describes the food_delivery_data.csv file, which is a subset of the Kaggle Food Delivery Dataset. It is specifically curated for a causal inference project as part of the CS-GY 6053: Foundations of Data Science course at NYU Tandon, Fall 2024.
+
+Dataset Details
+Filename: food_delivery_data.csv
+Number of Rows: 100
+Columns:
+Weather: Represents the weather conditions during food delivery.
+Traffic: Indicates road traffic density.
+Time: The time taken for food delivery, measured in minutes.
+
 ## How to Run the Analysis
 1. Clone this repository:
    ```bash
